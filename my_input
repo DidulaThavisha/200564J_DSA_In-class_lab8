@@ -1,0 +1,52 @@
+#include <iostream>
+using namespace std;
+  
+void heapify(int arr[], int n, int root){
+    int max = root;
+    int left = 2 * root + 1;  
+    int right = 2 * root + 2;
+    
+    if (left < n && arr[left] > arr[max]) { // If left child is larger than root
+        max = left;
+    }
+    if (right < n && arr[right] > arr[max]){  // If right child is larger than max so far
+        max = right;
+    }
+    if (max != root) {      // If max is not root
+        swap(arr[root], arr[max]);
+        heapify(arr, n, max);
+    }
+}
+
+void heapSort(int arr[], int n){
+    for (int i = n / 2 - 1; i >= 0; i--)    // build heap (rearrange array)
+        heapify(arr, n, i);
+
+    for (int i = n - 1; i >= 0; i--) {  //// extracting elements from heap one by one
+        swap(arr[0], arr[i]);
+        heapify(arr, i, 0);
+    }
+}
+
+  
+/* print contents of array */
+void displayArray(int arr[], int n)
+{
+   for (int i=0; i<n; ++i)
+   cout << arr[i] << " ";
+   cout << "\n";
+}
+  
+// main program
+int main()
+{
+   int heap_arr[] = {10, 15, 8, 12, 6, 20, 1, 9, 17};
+   int n = sizeof(heap_arr)/sizeof(heap_arr[0]);
+   cout<<"Input array"<<endl;
+   displayArray(heap_arr,n);
+  
+   heapSort(heap_arr, n);
+  
+   cout << "Sorted array"<<endl;
+   displayArray(heap_arr, n);
+}
